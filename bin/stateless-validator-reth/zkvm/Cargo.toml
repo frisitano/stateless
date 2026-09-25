@@ -17,8 +17,8 @@ alloy-primitives = { version = "1.6.1", default-features = false, features = [
     "native-keccak",
 ] }
 
-# Draft: a path into an ere checkout next to this one, until ere publishes `ere-platform-zkvm`.
-ere-platform-zkvm = { path = "../../../../ere/crates/platform/zkvm" }
+# Draft: ere-platform-zkvm from the ere branch that adds it, until ere releases it.
+ere-platform-zkvm = { git = "https://github.com/frisitano/ere", branch = "feat/zkvm-accelerators-linker" }
 
 # `sp1` is the zkvm-standards crypto provider plus `native_keccak256` on `zkvm_keccak256`, which
 # is what every zkVM needs here.
@@ -28,7 +28,7 @@ stateless-validator-reth = { path = "../../../crates/stateless-validator-reth", 
 
 # ere-platform-zkvm implements the workspace's ere-platform-core, unchanged since v0.17.0.
 [patch."https://github.com/eth-act/ere"]
-ere-platform-core = { path = "../../../../ere/crates/platform/core" }
+ere-platform-core = { git = "https://github.com/frisitano/ere", branch = "feat/zkvm-accelerators-linker" }
 
 [profile.release]
 codegen-units = 1

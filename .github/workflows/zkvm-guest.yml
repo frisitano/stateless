@@ -1,0 +1,39 @@
+# Builds the stateless validator as one zkVM-agnostic guest object, then links, tests and packages
+# it for every zkVM with ere's reusable workflow.
+name: zkVM guest
+
+on:
+  push:
+    branches: [feat/zkvm-accelerators-linker]
+  workflow_dispatch:
+
+jobs:
+  guest-object:
+    name: Build guest object
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build
+        id: build
+        uses: frisitano/ere/.github/actions/build-guest-object@feat/zkvm-accelerators-linker
+        with:
+          crate: bin/stateless-validator-reth/zkvm
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: guest-object
+          path: ${{ steps.build.outputs.path }}
+
+  zkvm:
+    needs: guest-object
+    uses: frisitano/ere/.github/workflows/link-guest.yml@feat/zkvm-accelerators-linker
+    with:
+      guest-object: guest-object
+      name: stateless-validator-reth
+      ere-repository: frisitano/ere
+      ere-ref: feat/zkvm-accelerators-linker
+      test-stateless-validator: reth
+      ere-guests-repository: frisitano/ere-guests
+      ere-guests-ref: feat/zkvm-accelerators-linker
+      package: true
