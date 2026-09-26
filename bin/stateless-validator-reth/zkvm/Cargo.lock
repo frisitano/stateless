@@ -1196,10 +1196,12 @@ checksum = "877a4ace8713b0bcf2a4e7eec82529c029f1d0619886d18145fea96c3ffe5c0f"
 [[package]]
 name = "ere-platform-core"
 version = "0.18.1"
+source = "git+https://github.com/frisitano/ere?branch=feat%2Fzkvm-accelerators-linker#5449960bbe13d15fa2d6ddda7ada2a2659f39481"
 
 [[package]]
 name = "ere-platform-zkvm"
 version = "0.18.1"
+source = "git+https://github.com/frisitano/ere?branch=feat%2Fzkvm-accelerators-linker#5449960bbe13d15fa2d6ddda7ada2a2659f39481"
 dependencies = [
  "ere-platform-core",
  "getrandom 0.2.17",
