@@ -26,6 +26,14 @@ stateless-validator-reth = { path = "../../../crates/stateless-validator-reth", 
     "sp1",
 ] }
 
+# 256-bit EVM arithmetic (MUL, DIV, MOD, ADDMOD, MULMOD, EXP) through the zkVM SDK's `zkvm_u256_*`,
+# on the stack's little-endian limbs: revm-interpreter's `zkvm-u256` feature, from the vendored copy
+# patched in below.
+revm-interpreter = { version = "43.0.2", default-features = false, features = ["zkvm-u256"] }
+
+[patch.crates-io]
+revm-interpreter = { path = "../../../vendor/revm-interpreter" }
+
 # ere-platform-zkvm implements the workspace's ere-platform-core, unchanged since v0.17.0.
 [patch."https://github.com/eth-act/ere"]
 ere-platform-core = { git = "https://github.com/frisitano/ere", branch = "feat/zkvm-accelerators-linker" }

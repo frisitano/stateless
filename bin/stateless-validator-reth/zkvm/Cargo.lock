@@ -2752,8 +2752,6 @@ dependencies = [
 [[package]]
 name = "revm-interpreter"
 version = "43.0.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "aa32f5099a266329d1869d6f9bf4bb7894345d2b58c57d05396f67385d65f299"
 dependencies = [
  "revm-bytecode",
  "revm-context-interface",
@@ -3154,6 +3152,7 @@ version = "0.1.0"
 dependencies = [
  "alloy-primitives",
  "ere-platform-zkvm",
+ "revm-interpreter",
  "stateless-validator-reth",
 ]
 
