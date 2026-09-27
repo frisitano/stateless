@@ -1,5 +1,5 @@
 # Builds the stateless validator as one zkVM-agnostic guest object, then links, tests and packages
-# it for every zkVM with ere's reusable workflow.
+# it for every zkVM with ere-guests' reusable workflow, against Ere's published SDKs.
 name: zkVM guest
 
 on:
@@ -16,8 +16,10 @@ jobs:
 
       - name: Build
         id: build
-        uses: frisitano/ere/.github/actions/build-guest-object@feat/zkvm-accelerators-linker
+        uses: frisitano/ere-guests/.github/actions/build-guest-object@feat/zkvm-accelerators-linker
         with:
+          sdk-repository: frisitano/ere
+          sdk-release: sdk-dev-1
           crate: bin/stateless-validator-reth/zkvm
 
       - uses: actions/upload-artifact@v4
@@ -27,12 +29,12 @@ jobs:
 
   zkvm:
     needs: guest-object
-    uses: frisitano/ere/.github/workflows/link-guest.yml@feat/zkvm-accelerators-linker
+    uses: frisitano/ere-guests/.github/workflows/link-guest.yml@feat/zkvm-accelerators-linker
     with:
       guest-object: guest-object
       name: stateless-validator-reth
-      ere-repository: frisitano/ere
-      ere-ref: feat/zkvm-accelerators-linker
+      sdk-repository: frisitano/ere
+      sdk-release: sdk-dev-1
       test-stateless-validator: reth
       ere-guests-repository: frisitano/ere-guests
       ere-guests-ref: feat/zkvm-accelerators-linker
