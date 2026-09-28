@@ -19,7 +19,7 @@ jobs:
         uses: frisitano/ere-guests/.github/actions/build-guest-object@feat/zkvm-accelerators-linker
         with:
           sdk-repository: frisitano/ere
-          sdk-release: sdk-dev-3
+          sdk-release: sdk-dev-4
           crate: bin/stateless-validator-reth/zkvm
 
       - uses: actions/upload-artifact@v4
@@ -34,7 +34,7 @@ jobs:
       guest-object: guest-object
       name: stateless-validator-reth
       sdk-repository: frisitano/ere
-      sdk-release: sdk-dev-3
+      sdk-release: sdk-dev-4
       test-stateless-validator: reth
       ere-guests-repository: frisitano/ere-guests
       ere-guests-ref: feat/zkvm-accelerators-linker
