@@ -38,8 +38,8 @@ revm-bytecode.workspace = true
 revm-database-interface.workspace = true
 revm-state.workspace = true
 
-# zkVM standard
-zkvm-interface = { workspace = true, optional = true }
+# zkVM standard accelerators
+ere-platform-zkvm = { workspace = true, optional = true }
 
 # misc
 thiserror.workspace = true
@@ -52,5 +52,5 @@ reth-trie = ["tries/std"]
 zkvm-interface = [
     "alloy-consensus/crypto-backend",
     "dep:revm",
-    "dep:zkvm-interface",
+    "dep:ere-platform-zkvm",
 ]
