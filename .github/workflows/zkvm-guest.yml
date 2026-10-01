@@ -1,0 +1,76 @@
+name: zkVM static library guest
+
+on:
+  push:
+    paths: &paths
+      - .github/workflows/zkvm-guest.yml
+      - bin/stateless-validator-reth/zkvm/**
+      - scripts/guests/**
+      - targets/**
+  pull_request:
+    paths: *paths
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  # Ere release holding the zkVM static libraries, and the Ere revision whose server images match
+  # them.
+  ERE_STATICLIB_RELEASE: https://github.com/frisitano/ere/releases/download/staticlib-dev-1
+  ERE_STATICLIB_IMAGE_TAG: 77e2aae
+  LD_LLD: /usr/lib/llvm-22/bin/ld.lld
+
+jobs:
+  guest:
+    permissions:
+      contents: read
+      id-token: write
+    name: Build and execute Reth guest (${{ matrix.zkvm }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        zkvm:
+          - openvm
+          - sp1
+          - zisk
+    steps:
+      - name: Secure runner
+        uses: tempoxyz/gh-actions/actions/secure-runner@d5402286a7abdfb7232173b3228d56473feb8a66 # 2026-09-29T02-04-45Z-d5402286
+      - name: Checkout source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Free disk space
+        run: .github/scripts/free-up-disk-space.sh
+
+      - name: Install Rust
+        uses: tempoxyz/gh-actions/vendor/dtolnay/rust-toolchain@d5402286a7abdfb7232173b3228d56473feb8a66 # 2026-09-29T02-04-45Z-d5402286
+        with:
+          toolchain: 1.95.0
+          components: rust-src
+
+      # Only the linker: a newer libclang would change how the guest's bindgen build scripts run.
+      - name: Install ld.lld 22
+        run: |
+          wget -qO- https://apt.llvm.org/llvm-snapshot.gpg.key | sudo tee /etc/apt/trusted.gpg.d/apt.llvm.org.asc
+          echo "deb http://apt.llvm.org/noble/ llvm-toolchain-noble-22 main" |
+            sudo tee /etc/apt/sources.list.d/llvm-22.list
+          sudo apt-get update -q
+          sudo apt-get install -y lld-22
+
+      - name: Download the zkVM static library
+        run: |
+          curl -fsSLO "$ERE_STATICLIB_RELEASE/SHA256SUMS"
+          curl -fsSLO "$ERE_STATICLIB_RELEASE/staticlib-${{ matrix.zkvm }}.tar.gz"
+          grep " staticlib-${{ matrix.zkvm }}.tar.gz$" SHA256SUMS | sha256sum -c -
+          tar -xzf "staticlib-${{ matrix.zkvm }}.tar.gz"
+
+      - name: Build ELF and verification key
+        run: scripts/guests/build-staticlib.sh "${{ matrix.zkvm }}" "staticlib-${{ matrix.zkvm }}" output
+
+      - name: Execute built guest
+        run: scripts/guests/smoke-test.sh "${{ matrix.zkvm }}" output

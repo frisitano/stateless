@@ -1168,8 +1168,6 @@ dependencies = [
  "cexpr",
  "clang-sys",
  "itertools 0.13.0",
- "log",
- "prettyplease",
  "proc-macro2",
  "quote",
  "regex",
@@ -2086,6 +2084,19 @@ source = "git+https://github.com/eth-act/ere?tag=v0.17.0#5023513851c69ab9c4871e3
 name = "ere-platform-core"
 version = "0.17.0"
 source = "git+https://github.com/eth-act/ere?tag=v0.17.0#5023513851c69ab9c4871e3899608e450e6960b6"
+
+[[package]]
+name = "ere-platform-core"
+version = "0.18.1"
+source = "git+https://github.com/frisitano/ere?branch=feat%2Fzkvm-vendor-staticlib#92888d2995d00775f6d253f56834cafbf5d23b78"
+
+[[package]]
+name = "ere-platform-zkvm"
+version = "0.18.1"
+source = "git+https://github.com/frisitano/ere?branch=feat%2Fzkvm-vendor-staticlib#92888d2995d00775f6d253f56834cafbf5d23b78"
+dependencies = [
+ "ere-platform-core 0.18.1",
+]
 
 [[package]]
 name = "ere-prover-core"
@@ -3968,16 +3979,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "85eae3c4ed2f50dcfe72643da4befc30deadb458a9b590d720cde2f2b1e97da9"
 dependencies = [
  "zerocopy",
-]
-
-[[package]]
-name = "prettyplease"
-version = "0.2.37"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "479ca8adacdd7ce8f1fb39ce9ecccbfe93a3f1344b3d0d97f20bc0196208f62b"
-dependencies = [
- "proc-macro2",
- "syn 2.0.119",
 ]
 
 [[package]]
@@ -6369,6 +6370,7 @@ dependencies = [
  "alloy-primitives",
  "alloy-rlp",
  "alloy-rpc-types-debug",
+ "ere-platform-zkvm",
  "reth-chainspec",
  "reth-consensus",
  "reth-ethereum-consensus",
@@ -6384,7 +6386,6 @@ dependencies = [
  "serde_with",
  "thiserror",
  "tries",
- "zkvm-interface",
 ]
 
 [[package]]
@@ -6410,7 +6411,8 @@ dependencies = [
  "alloy-primitives",
  "alloy-rpc-types-engine",
  "critical-section",
- "ere-platform-core",
+ "ere-platform-core 0.17.0",
+ "ere-platform-zkvm",
  "reth-chainspec",
  "reth-ethereum-primitives",
  "reth-evm-ethereum",
@@ -6420,7 +6422,6 @@ dependencies = [
  "stateless-validator-common",
  "thiserror",
  "tries",
- "zkvm-interface",
 ]
 
 [[package]]
@@ -7841,14 +7842,6 @@ dependencies = [
  "serde",
  "serde_json",
  "thiserror",
-]
-
-[[package]]
-name = "zkvm-interface"
-version = "0.1.0"
-source = "git+https://github.com/eth-act/zkvm-standards?rev=282cd356c3a0498416bb0619f9c8a347ce9933fb#282cd356c3a0498416bb0619f9c8a347ce9933fb"
-dependencies = [
- "bindgen",
 ]
 
 [[package]]

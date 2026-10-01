@@ -85,10 +85,8 @@ revm-bytecode = { version = "43.0.0", default-features = false }
 revm-database-interface = { version = "43.0.0", default-features = false }
 revm-state = { version = "43.0.0", default-features = false }
 
-# zkVM standard
-zkvm-interface = { git = "https://github.com/eth-act/zkvm-standards", rev = "282cd356c3a0498416bb0619f9c8a347ce9933fb" }
-
 # Ere
+ere-platform-zkvm = { git = "https://github.com/frisitano/ere", branch = "feat/zkvm-vendor-staticlib", default-features = false }
 ere-platform-core = { git = "https://github.com/eth-act/ere", tag = "v0.17.0" }
 ere-server-client = { git = "https://github.com/eth-act/ere", tag = "v0.17.0" }
 ere-util-tokio = { git = "https://github.com/eth-act/ere", tag = "v0.17.0" }

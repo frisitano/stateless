@@ -1211,6 +1211,11 @@ version = "0.17.0"
 source = "git+https://github.com/eth-act/ere?tag=v0.17.0#5023513851c69ab9c4871e3899608e450e6960b6"
 
 [[package]]
+name = "ere-platform-core"
+version = "0.18.1"
+source = "git+https://github.com/frisitano/ere?branch=feat%2Fzkvm-vendor-staticlib#92888d2995d00775f6d253f56834cafbf5d23b78"
+
+[[package]]
 name = "ere-platform-openvm"
 version = "0.17.0"
 source = "git+https://github.com/eth-act/ere?tag=v0.17.0#5023513851c69ab9c4871e3899608e450e6960b6"
@@ -1219,7 +1224,7 @@ dependencies = [
  "ark-ec",
  "ark-serialize",
  "aurora-engine-modexp",
- "ere-platform-core",
+ "ere-platform-core 0.17.0",
  "k256 0.13.4 (git+https://github.com/openvm-org/openvm.git?tag=v2.1.0-preview)",
  "openvm",
  "openvm-algebra-guest",
@@ -1232,6 +1237,14 @@ dependencies = [
  "p256 0.13.2 (git+https://github.com/openvm-org/openvm.git?tag=v2.1.0-preview)",
  "ripemd",
  "zkvm-interface",
+]
+
+[[package]]
+name = "ere-platform-zkvm"
+version = "0.18.1"
+source = "git+https://github.com/frisitano/ere?branch=feat%2Fzkvm-vendor-staticlib#92888d2995d00775f6d253f56834cafbf5d23b78"
+dependencies = [
+ "ere-platform-core 0.18.1",
 ]
 
 [[package]]
@@ -3559,6 +3572,7 @@ dependencies = [
  "alloy-primitives",
  "alloy-rlp",
  "alloy-rpc-types-debug",
+ "ere-platform-zkvm",
  "reth-chainspec",
  "reth-consensus",
  "reth-ethereum-consensus",
@@ -3574,7 +3588,6 @@ dependencies = [
  "serde_with",
  "thiserror",
  "tries",
- "zkvm-interface",
 ]
 
 [[package]]
@@ -3598,7 +3611,8 @@ dependencies = [
  "alloy-genesis",
  "alloy-primitives",
  "alloy-rpc-types-engine",
- "ere-platform-core",
+ "ere-platform-core 0.17.0",
+ "ere-platform-zkvm",
  "reth-chainspec",
  "reth-ethereum-primitives",
  "reth-evm-ethereum",
@@ -3608,7 +3622,6 @@ dependencies = [
  "stateless-validator-common",
  "thiserror",
  "tries",
- "zkvm-interface",
 ]
 
 [[package]]

@@ -24,6 +24,12 @@ guest_config() {
     esac
 
     ZKVM="$1"
+    # Guests built from an Ere zkVM static library run on the server image of the Ere revision that
+    # built it.
+    if [[ -n "${ERE_STATICLIB_IMAGE_TAG:-}" ]]; then
+        ZKVM_VERSION="ere-staticlib-$ERE_STATICLIB_IMAGE_TAG"
+        SERVER_IMAGE="ghcr.io/eth-act/ere/ere-server-$ZKVM:$ERE_STATICLIB_IMAGE_TAG"
+    fi
     ARTIFACT_NAME="stateless-validator-reth-${ZKVM}-${ZKVM_VERSION}"
     export ZKVM ZKVM_VERSION COMPILER_IMAGE SERVER_IMAGE ARTIFACT_NAME
 }

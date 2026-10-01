@@ -1,0 +1,38 @@
+[workspace]
+
+[package]
+name = "stateless-validator-reth-zkvm"
+version = "0.1.0"
+edition = "2024"
+
+# A `no_std` guest that names no zkVM: a `staticlib` of LLVM bitcode defining `int main(void)`,
+# linked against a zkVM static library by `scripts/guests/build-staticlib.sh`.
+[lib]
+crate-type = ["staticlib"]
+
+[dependencies]
+# enable features
+alloy-primitives = { version = "1.6.1", default-features = false, features = [
+    "map-foldhash",
+    "native-keccak",
+] }
+
+# reth's `no_std` `once_cell::sync` types lock with `critical-section`; `src/lib.rs` implements it.
+critical-section = "1.2.0"
+
+ere-platform-zkvm = { git = "https://github.com/frisitano/ere", branch = "feat/zkvm-vendor-staticlib" }
+
+# `sp1` is not SP1-specific: it is the zkvm-standards crypto provider plus `native_keccak256`.
+stateless-validator-reth = { path = "../../../crates/stateless-validator-reth", default-features = false, features = [
+    "sp1",
+] }
+
+# One `Platform` trait: the stateless workspace's Ere release and `ere-platform-zkvm`'s Ere revision
+# have the same `ere-platform-core`.
+[patch."https://github.com/eth-act/ere"]
+ere-platform-core = { git = "https://github.com/frisitano/ere", branch = "feat/zkvm-vendor-staticlib" }
+
+[profile.release]
+codegen-units = 1
+lto = "fat"
+panic = "abort"
